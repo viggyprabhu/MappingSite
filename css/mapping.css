@@ -37,10 +37,10 @@
     height: 8px;
     border-radius: 4px;
     background-color: #f00;
-    position: absolute; // this is also key
+    position: absolute; 
 }
 
-#legend_fields
+/*#legend_fields
 {
 	border: 2px solid;
 	border-radius:25px;
@@ -51,4 +51,4 @@
 #legend_title
 {
 	padding: 10px;
-}
+}*/
