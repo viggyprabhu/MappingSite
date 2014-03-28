@@ -1,0 +1,54 @@
+#map_wrapper {
+    width: 600px;
+    height: 397px;
+    position: relative; 
+    
+}
+
+.numOfChild {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #f00;
+    position: absolute; 
+    visibility: hidden;
+}
+
+.numOfMobile {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #0f0;
+    position: absolute; 
+    visibility: hidden;
+}
+
+.socialClass {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #00f;
+    position: absolute;
+    visibility: hidden;
+}
+
+.map-point {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #f00;
+    position: absolute; // this is also key
+}
+
+#legend_fields
+{
+	border: 2px solid;
+	border-radius:25px;
+	width: 250px;
+	height: 150px;
+	background-color: #ffd700;
+}
+#legend_title
+{
+	padding: 10px;
+}
