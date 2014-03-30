@@ -5,127 +5,91 @@ num_of_mobile_arr = [1,0,1,1,1,1,0,0,3,1,1,1,0,1,1,1,1,1,1,0];
 social_class_arr = [2,2,2,2,2,2,2,2,4,2,2,3,3,3,3,3,3,3,3,3];
 num_of_child_arr = [4,0,0,2,1,3,1,4,2,2,1,3,3,0,2,4,0,5,0,3];
 
-function get_colour_code_for_num_of_mobile(num_of_mobile)
-{	
-	if(num_of_mobile==0)
-	{
-		
-	}
-	else if(num_of_mobile==1)
-	{
-	
-	}
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
-function point_num_of_mobile(i)
+
+function get_colour_code(key,items)
+{	
+	// This method is to get uniform colour code amongst all possible values for the data
+	var colour_code_map =[];
+	var colour_incrementer =1;
+	var interval = 255/(items.filter(function (value, index, self) { 
+	    			return self.indexOf(value) === index;
+				}).length);
+
+	for(var i=0; i<items.length; i++) {
+		if(!(items[i] in colour_code_map))
+		{
+			var code = interval*colour_incrementer++;
+			colour_code_map[items[i]] = rgbToHex(255,255-code,code);					
+		}
+	}
+	return colour_code_map;
+}
+function generate_points(key, i,colour_code)
 {
-	var point = $('<div class="numOfMobile"></div>'),
+	//This method generates individual point with correct colour code based on the key passed	
+	var code = colour_code;
+	var key1 = "mapPoint";
+	var point = $('<div id ="'+key+'" class="'+key1+'"></div>'),
             x = coords[0][i],
-            y = coords[1][i];
-	    colour_code = get_colour_code_for_num_of_mobile(num_of_mobile_arr[i]);	
+            y = coords[1][i];	
         point.css({
-            left: x + "px",
-            top: y + "px"
+            "left": x + "px",
+            "top": y + "px",
+	    "background-color": code,	
         });
 	return point;
 }
-function map_num_of_mobile()
+
+function map_points(key,items)
 {
-	//This method maps all the points for Number of Mobiles for each house on the map but all points are hidden.
-	    var NumOfMobile = new Array(x_coords.length);
-	    for(var i=0; i<NumOfMobile.length; i++) {
-		    NumOfMobile[i] = $('#map_wrapper');
-		    point = point_num_of_mobile(i); 
-		    point.appendTo(NumOfMobile[i]);
-	    }
+        //This method generates set of points for a particular key
+	var colour_map = get_colour_code(key,items);
+	for(var i=0; i<x_coords.length; i++) {
+	        point = generate_points(key,i,colour_map[items[i]]); 
+		point.appendTo($('#map_wrapper'));
+	}
 }
 
-function map_social_class()
-{
-    //This method maps all the points for Social Class for each house on the map but all points are hidden.
-    var SocialClass = new Array(x_coords.length);
-    for(var i=0; i<SocialClass.length; i++) {
-	    SocialClass[i] = $('#map_wrapper');
-        var point = $('<div class="socialClass"></div>'),
-            x = coords[0][i],
-            y = coords[1][i];
-        point.css({
-            left: x + "px",
-            top: y + "px"
-        });
-        point.appendTo(SocialClass[i]);
-    }
-}
-
-function map_num_of_child()
-{
-    //This method maps all the points for Number of children for each house on the map but all points are hidden.
-    var NumOfChild = new Array(x_coords.length);
-    for(var i=0; i<NumOfChild.length; i++) {
-	    NumOfChild[i] = $('#map_wrapper');
-        var point = $('<div class="numOfChild"></div>'),
-            x = coords[0][i],
-            y = coords[1][i];
-        point.css({
-            left: x + "px",
-            top: y + "px"
-        });
-        point.appendTo(NumOfChild[i]);
-    }
-}
 
 $(function(){
 $(document).ready(function()
 {
-    map_num_of_mobile();
-    map_social_class();
-    map_num_of_child();
+    map_points("numOfMobile",num_of_mobile_arr);
+    map_points("socialClass",social_class_arr);
+    map_points("numOfChild",num_of_child_arr);
+    //draw_legend("numOfMobile",num_of_mobile_arr);
      
 });
-/*$('#plot_form').submit(function(ev) {
-    ev.preventDefault();
-    var map = $('#map_wrapper'),
-        point = $('<div class="map-point"></div>'),
-        x = $('#lon').val(),
-        y = $('#lat').val();
-    
-    point.css({
-        left: x + "px",
-        top: y + "px"
-    });
-    point.appendTo(map);
-});
 
-$('#reset').click(function() {
-    $('.map-point').remove();
-    $('#lat').val('');
-    $('#lon').val('');
-});*/
 function show_social_class()
 {
-	$('.socialClass').css(
+	$('#socialClass').css(
             {'visibility':'visible'}
         );
-        $(".numOfMobile, .numOfChild").css(
+        $("#numOfMobile, #numOfChild").css(
             {'visibility':'hidden'}
         );
 }
 
 function show_num_of_mobile()
 {
-	$('.numOfMobile').css(
+	$('#numOfMobile').css(
             {'visibility':'visible'}
         );
-        $(".numOfChild, .socialClass").css(
+        $("#numOfChild, #socialClass").css(
             {'visibility':'hidden'}
         );
 }
 
 function show_num_of_child()
 {
-	$('.numOfChild').css(
+	$('#numOfChild').css(
             {'visibility':'visible'}
         );
-        $(".numOfMobile, .socialClass").css(
+        $("#numOfMobile, #socialClass").css(
             {'visibility':'hidden'}
         );
 }

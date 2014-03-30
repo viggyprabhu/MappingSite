@@ -8,16 +8,30 @@
 		<script type="text/javascript" src="www/mapping.js"></script>
 	</head>
 	<body>
-	  	<div id="map_wrapper"><img src="image/DSC8111.jpg" width="600" height="397"></div>
-		<!--<div id="legend_fields">
-			<div id="legend_title">This is just a legend</div>
-			<div id="legend_items"></div>		
-		</div>-->
-		<select name="selectionField" id="selectionField"> 
-			<option selected="selected" value="Select">Choose an option...</option>
-			<option value="NumOfMobile">Number of Mobile </option>
-		  	<option value="SocialClass">Social Class</option>
-		  	<option value="NumOfChild">Number of Children</option>
-		</select>
+		<div id="body_area">
+			<h3>This site is to show data collected from various villages on the map of the respective village.
+			<div id="map_area">
+			  	<div id="map_wrapper">
+					<img src="images/kataria-small.jpg" width="600" height="397">
+				</div>
+				<div id="legend_fields">
+					<div id="legend_title">Map Details</div>
+					<div id="legend_items"></div>		
+				</div>
+			</div><!-- End of Map Area-->
+			<div id=selectionArea>
+				<div>
+				</div>
+				<div id="selectionList">
+
+					<select name="selectionField" id="selectionField"> 
+						<option selected="selected" value="Select">Choose an option...</option>
+						<option value="NumOfMobile">Number of Mobile </option>
+					  	<option value="SocialClass">Social Class</option>
+					  	<option value="NumOfChild">Number of Children</option>
+					</select>
+				</div><!-- End of Selection List-->
+			</div>
+		</div> <!-- End of Map Area-->
 	</body>
 </html>

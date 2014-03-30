@@ -1,11 +1,21 @@
+#body_area
+{
+	position: absolute;
+	float: right;
+}
+#map_area
+{
+	padding: 10px;
+}
 #map_wrapper {
     width: 600px;
     height: 397px;
     position: relative; 
+    float: left;	
     
 }
 
-.numOfChild {
+/*.numOfChild {
     width: 4px;
     height: 4px;
     border-radius: 2px;
@@ -30,25 +40,35 @@
     background-color: #00f;
     position: absolute;
     visibility: hidden;
+}*/
+
+.mapPoint {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    position: absolute;
+    visibility: hidden;
 }
 
-.map-point {
-    width: 8px;
-    height: 8px;
-    border-radius: 4px;
-    background-color: #f00;
-    position: absolute; 
-}
-
-/*#legend_fields
+#legend_fields
 {
 	border: 2px solid;
 	border-radius:25px;
 	width: 250px;
 	height: 150px;
-	background-color: #ffd700;
+	float: left;
+	padding: 5px;
+	margin-top: 120px;
+	margin-left: 10px;
 }
 #legend_title
 {
 	padding: 10px;
-}*/
+}
+
+#selectionList
+{
+	position: relative;
+	margin-top: 415px;
+	margin-left: 10px;
+}
