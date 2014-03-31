@@ -4,6 +4,10 @@ coords = [x_coords,y_coords];
 num_of_mobile_arr = [1,0,1,1,1,1,0,0,3,1,1,1,0,1,1,1,1,1,1,0];
 social_class_arr = [2,2,2,2,2,2,2,2,4,2,2,3,3,3,3,3,3,3,3,3];
 num_of_child_arr = [4,0,0,2,1,3,1,4,2,2,1,3,3,0,2,4,0,5,0,3];
+//SC-1, ST-2, OBC-3, GN-4, others-5
+
+code_socialClass = {1:"SC",2:"ST",3:"OBC",4:"GN",5:"Others"};
+key_codes = [code_socialClass];
 
 colornames = ['#00ffff','#0000ff','#ff00ff','#008000',
               '#00ff00','#800000','#000080','#808000','#800080','#ff0000',
@@ -38,25 +42,56 @@ function generate_points(key, i,colour_code)
 	return point;
 }
 
+function get_legend_header(key)
+{
+	if(key=="socialClass")
+	{
+		return "Social Class Details:";
+	}
+	else if(key=="numOfMobile")
+	{
+		return "Number of Mobile Details:";
+	}
+	else if(key=="numOfChild")
+	{
+		return "Number of Children Details:";
+	}
+	else
+	{
+		return "";
+	}
+
+}
+
+function get_decoded_prop(key, prop)
+{
+	if(key=="socialClass")
+	{
+		return key_codes[0][prop];
+	}
+	else
+	{
+		return prop;
+	}
+}
 function draw_legend(key,colour_items)
 {
+        legend_header = get_legend_header(key);
+	
 	legend_items_div = $('<div id="legend_'+key+'" class="legend_'+key+'"></div>');
 	legend_items_div.appendTo($('#legend_items'));
+
+	legend_header_div = $('<div class="legend_header">'+legend_header+'</div>');
+	legend_header_div.appendTo($('#legend_'+key));
+	
+	
 	for(var prop in colour_items)
 	{
-		/*var value = colour_items[prop];
-		var legend_item = $('<div id="'+key+'_'+prop+'></div>'),
-		    colour_block = $('<div class="colour_block"></div>');
-		colour_block.css({"background-color":value});
-		var text = $('<div class="colour_text">'+prop+'</div>');
-		legend_item.appendTo($('#legend_items'));
-		colour_block.appendTo(legend_item);
-		text.appendTo(legend_item);*/
 		value = colour_items[prop];
 		colour_block = $('<div class="colour_block"></div>');
 		colour_block.css({"background-color":value});
 		colour_block.appendTo($('#legend_'+key));
-		text = $('<div class="colour_text">'+prop+'</div><br>');
+		text = $('<div class="colour_text">'+get_decoded_prop(key,prop)+'</div><br>');
 		text.appendTo($('#legend_'+key));
 		
 	}
