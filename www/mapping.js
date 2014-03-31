@@ -5,24 +5,20 @@ num_of_mobile_arr = [1,0,1,1,1,1,0,0,3,1,1,1,0,1,1,1,1,1,1,0];
 social_class_arr = [2,2,2,2,2,2,2,2,4,2,2,3,3,3,3,3,3,3,3,3];
 num_of_child_arr = [4,0,0,2,1,3,1,4,2,2,1,3,3,0,2,4,0,5,0,3];
 
-function rgbToHex(r, g, b) {
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
+colornames = ['#00ffff','#0000ff','#ff00ff','#008000',
+              '#00ff00','#800000','#000080','#808000','#800080','#ff0000',
+              '#c0c0c0','#008080', '#ffff00'];
 
 function get_colour_code(key,items)
 {	
 	// This method is to get uniform colour code amongst all possible values for the data
 	var colour_code_map =[];
-	var colour_incrementer =1;
-	var interval = 255/(items.filter(function (value, index, self) { 
-	    			return self.indexOf(value) === index;
-				}).length);
+	var colour_incrementer = 0;
 
 	for(var i=0; i<items.length; i++) {
 		if(!(items[i] in colour_code_map))
 		{
-			var code = interval*colour_incrementer++;
-			colour_code_map[items[i]] = rgbToHex(255,255-code,code);					
+			colour_code_map[items[i]] = colornames[colour_incrementer++];					
 		}
 	}
 	return colour_code_map;
@@ -31,8 +27,7 @@ function generate_points(key, i,colour_code)
 {
 	//This method generates individual point with correct colour code based on the key passed	
 	var code = colour_code;
-	var key1 = "mapPoint";
-	var point = $('<div id ="'+key+'" class="'+key1+'"></div>'),
+	var point = $('<div class="'+key+'"></div>'),
             x = coords[0][i],
             y = coords[1][i];	
         point.css({
@@ -43,11 +38,36 @@ function generate_points(key, i,colour_code)
 	return point;
 }
 
+function draw_legend(key,colour_items)
+{
+	legend_items_div = $('<div id="legend_'+key+'" class="legend_'+key+'"></div>');
+	legend_items_div.appendTo($('#legend_items'));
+	for(var prop in colour_items)
+	{
+		/*var value = colour_items[prop];
+		var legend_item = $('<div id="'+key+'_'+prop+'></div>'),
+		    colour_block = $('<div class="colour_block"></div>');
+		colour_block.css({"background-color":value});
+		var text = $('<div class="colour_text">'+prop+'</div>');
+		legend_item.appendTo($('#legend_items'));
+		colour_block.appendTo(legend_item);
+		text.appendTo(legend_item);*/
+		value = colour_items[prop];
+		colour_block = $('<div class="colour_block"></div>');
+		colour_block.css({"background-color":value});
+		colour_block.appendTo($('#legend_'+key));
+		text = $('<div class="colour_text">'+prop+'</div><br>');
+		text.appendTo($('#legend_'+key));
+		
+	}
+}
+
 function map_points(key,items)
 {
         //This method generates set of points for a particular key
 	var colour_map = get_colour_code(key,items);
-	for(var i=0; i<x_coords.length; i++) {
+	draw_legend(key,colour_map);
+	for(i=0; i<x_coords.length; i++) {
 	        point = generate_points(key,i,colour_map[items[i]]); 
 		point.appendTo($('#map_wrapper'));
 	}
@@ -60,43 +80,43 @@ $(document).ready(function()
     map_points("numOfMobile",num_of_mobile_arr);
     map_points("socialClass",social_class_arr);
     map_points("numOfChild",num_of_child_arr);
-    //draw_legend("numOfMobile",num_of_mobile_arr);
      
 });
 
 function show_social_class()
 {
-	$('#socialClass').css(
+	$(".socialClass, .legend_socialClass").css(
             {'visibility':'visible'}
         );
-        $("#numOfMobile, #numOfChild").css(
+	
+        $(".numOfMobile, .numOfChild, .legend_numOfMobile, .legend_numOfChild").css(
             {'visibility':'hidden'}
         );
 }
 
 function show_num_of_mobile()
 {
-	$('#numOfMobile').css(
+	$(".numOfMobile,.legend_numOfMobile").css(
             {'visibility':'visible'}
         );
-        $("#numOfChild, #socialClass").css(
+        $(".numOfChild, .socialClass, .legend_socialClass, .legend_numOfChild").css(
             {'visibility':'hidden'}
         );
 }
 
 function show_num_of_child()
 {
-	$('#numOfChild').css(
+	$(".numOfChild,.legend_numOfChild").css(
             {'visibility':'visible'}
         );
-        $("#numOfMobile, #socialClass").css(
+        $(".numOfMobile, .socialClass, .legend_numOfMobile, .legend_socialClass").css(
             {'visibility':'hidden'}
         );
 }
 
 function show_select_option()
 {
-        $(".numOfMobile, .socialClass,.numOfChild").css(
+        $(".numOfMobile, .socialClass,.numOfChild,.legend_numOfMobile,.legend_socialClass,.legend_numOfChild").css(
             {'visibility':'hidden'}
         );
 }

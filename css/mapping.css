@@ -7,6 +7,7 @@
 {
 	padding: 10px;
 }
+
 #map_wrapper {
     width: 600px;
     height: 397px;
@@ -15,52 +16,59 @@
     
 }
 
-/*.numOfChild {
-    width: 4px;
-    height: 4px;
+.numOfChild {
+    width: 8px;
+    height: 8px;
     border-radius: 2px;
-    background-color: #f00;
     position: absolute; 
     visibility: hidden;
 }
 
 .numOfMobile {
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     border-radius: 2px;
-    background-color: #0f0;
     position: absolute; 
     visibility: hidden;
 }
 
 .socialClass {
-    width: 4px;
-    height: 4px;
-    border-radius: 2px;
-    background-color: #00f;
-    position: absolute;
-    visibility: hidden;
-}*/
-
-.mapPoint {
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     border-radius: 2px;
     position: absolute;
     visibility: hidden;
 }
 
+.legend_numOfChild {
+    position: absolute; 
+    visibility: hidden;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.legend_numOfMobile {
+    position: absolute; 
+    visibility: hidden;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.legend_socialClass {
+    position: absolute;
+    visibility: hidden;
+    padding: 5px;
+    margin-left: 10px;
+}
+
 #legend_fields
 {
-	border: 2px solid;
-	border-radius:25px;
-	width: 250px;
-	height: 150px;
 	float: left;
 	padding: 5px;
 	margin-top: 120px;
 	margin-left: 10px;
 }
+
 #legend_title
 {
 	padding: 10px;
@@ -71,4 +79,16 @@
 	position: relative;
 	margin-top: 415px;
 	margin-left: 10px;
+}
+
+.colour_text {
+    padding-left: 20px;
+    float: left;
+    
+}
+
+.colour_block {
+    width: 60px;
+    height: 12px;
+    float: left;
 }
