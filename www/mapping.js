@@ -81,7 +81,7 @@ function draw_legend(key,colour_items)
 	legend_items_div = $('<div id="legend_'+key+'" class="legend_'+key+'"></div>');
 	legend_items_div.appendTo($('#legend_items'));
 
-	legend_header_div = $('<div class="legend_header">'+legend_header+'</div>');
+	legend_header_div = $('<div class="legend_header"><h4>'+legend_header+'</h4></div>');
 	legend_header_div.appendTo($('#legend_'+key));
 	
 	
