@@ -1,4 +1,4 @@
 MappingSite
 ===========
 
-Just a simple website that I am developing for a friend of mine. Will keep updating the code here if you want to see it live. http://viggy.in/mapping
+A website to view different village data collected by people on the ground. Will keep updating the code here if you want to see it live. http://viggy.in/MappingSite
