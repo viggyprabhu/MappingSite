@@ -4,11 +4,17 @@ coords = [x_coords,y_coords];
 num_of_mobile_arr = [1,0,1,1,1,1,0,0,3,1,1,1,0,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,1,1,2];
 social_class_arr = [2,2,2,2,2,2,2,2,4,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,1,4,2,2,2];
 num_of_child_arr = [4,0,0,2,1,3,1,4,2,2,1,3,3,0,2,4,0,5,0,3,2,1,0,0,5,5,2,0,0,5,0,5,1,3,1,5,6,0,5,0,0,3,0,0];
+priority_class_arr = [0,4,0,0,2,0,2,0,1,2,2,0,0,2,0,0,0,0,2,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,0];
+
+keys = ["numOfMobile","numOfChild","socialClass","priorityClass"];
 
 //SC-1, ST-2, OBC-3, GN-4, others-5
 code_socialClass = {1:"SC",2:"ST",3:"OBC",4:"GN",5:"Others"};
 
-key_codes = [code_socialClass];
+// Not Applicale-0, Disabled/handicapped-1, Single women/widow-2, Women headed household-3, others(old/destitute etc)-4
+code_priorityClass = {0:"Not Applicable",1:"Disabled/handicapped",2:"Single women/widow",3:"Women headed household",4:"others(old/destitute etc)"};
+
+key_codes = [code_socialClass,code_priorityClass];
 
 colornames = ['#00ffff','#0000ff','#ff00ff','#008000',
               '#00ff00','#800000','#000080','#808000','#800080','#ff0000',
@@ -57,6 +63,10 @@ function get_legend_header(key)
 	{
 		return "Number of Children Details:";
 	}
+	else if(key=="priorityClass")
+	{
+		return "Priority Class Details:";
+	}
 	else
 	{
 		return "";
@@ -69,6 +79,10 @@ function get_decoded_prop(key, prop)
 	if(key=="socialClass")
 	{
 		return key_codes[0][prop];
+	}
+	else if(key=="priorityClass")
+	{
+		return key_codes[1][prop];
 	}
 	else
 	{
@@ -116,65 +130,40 @@ $(document).ready(function()
     map_points("numOfMobile",num_of_mobile_arr);
     map_points("socialClass",social_class_arr);
     map_points("numOfChild",num_of_child_arr);
+    map_points("priorityClass",priority_class_arr);
      
 });
 
-function show_social_class()
+function showKey(key,display)
 {
-	$(".socialClass, .legend_socialClass").css(
-            {'visibility':'visible'}
-        );
-	
-        $(".numOfMobile, .numOfChild, .legend_numOfMobile, .legend_numOfChild").css(
-            {'visibility':'hidden'}
+	var displayValue = "hidden";
+	if(display)
+	{
+		displayValue = "visible";
+	}
+	$("."+key+", .legend_"+key).css(
+            {'visibility':displayValue}
         );
 }
 
-function show_num_of_mobile()
+function show_selected_key(key)
 {
-	$(".numOfMobile,.legend_numOfMobile").css(
-            {'visibility':'visible'}
-        );
-        $(".numOfChild, .socialClass, .legend_socialClass, .legend_numOfChild").css(
-            {'visibility':'hidden'}
-        );
-}
-
-function show_num_of_child()
-{
-	$(".numOfChild,.legend_numOfChild").css(
-            {'visibility':'visible'}
-        );
-        $(".numOfMobile, .socialClass, .legend_numOfMobile, .legend_socialClass").css(
-            {'visibility':'hidden'}
-        );
-}
-
-function show_select_option()
-{
-        $(".numOfMobile, .socialClass,.numOfChild,.legend_numOfMobile,.legend_socialClass,.legend_numOfChild").css(
-            {'visibility':'hidden'}
-        );
+	for(var i in keys)
+	{
+		if(keys[i]==key)
+		{
+			showKey(keys[i],1);
+		}
+		else
+		{
+			showKey(keys[i],0);
+		}
+	}
 }
 
 $("#selectionField").change(function() {
-    var filter = this.value 
-    if(filter == "SocialClass")
-    {
-	show_social_class(); 
-    }
-    if(filter == "NumOfMobile")
-    {
-        show_num_of_mobile();
-    }
-    if(filter == "NumOfChild")
-    { 
-        show_num_of_child();
-    }
-    if(filter == "Select")
-    { 
-        show_select_option();
-    }
+    var filter = this.value; 
+    show_selected_key(filter);
  });
 });
 

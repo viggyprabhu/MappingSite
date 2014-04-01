@@ -1,4 +1,4 @@
-	#body_area
+#body_area
 {
 	position: absolute;
 	float: right;
@@ -40,6 +40,14 @@
     visibility: hidden;
 }
 
+.priorityClass {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    visibility: hidden;
+}
+
 .legend_numOfChild {
     position: absolute; 
     visibility: hidden;
@@ -55,6 +63,13 @@
 }
 
 .legend_socialClass {
+    position: absolute;
+    visibility: hidden;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.legend_priorityClass {
     position: absolute;
     visibility: hidden;
     padding: 5px;
