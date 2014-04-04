@@ -1,102 +1,124 @@
 #body_area
 {
 	position: absolute;
-	float: right;
 }
+
+#selectVillage
+{
+	float: left;
+}
+
+#selectCriteria
+{
+	margin-left: 20px;
+	float: left;
+}
+
+/*#sizeSelection
+{
+	margin-left: 20px;
+	float: left;
+}*/
+
 #map_area
 {
 	padding: 3px;
 }
 
-#map_wrapper {
-    width: 600px;
-    height: 397px;
-    position: relative; 
-    float: left;	
-    
+#map_wrapper {  
+
+	position: absolute;
+	margin: 10px;
+	float: left;
+	
+}
+
+.tooltip {
+    display:none;
+    background:url(black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
 }
 
 .numOfChild {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    position: absolute; 
     visibility: hidden;
+    position: absolute;
 }
 
 .numOfMobile {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    position: absolute; 
     visibility: hidden;
+    position: absolute;
 }
 
 .socialClass {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    position: absolute;
     visibility: hidden;
+    position: absolute;
 }
 
 .priorityClass {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    position: absolute;
     visibility: hidden;
+    position: absolute;
 }
 
-.legend_numOfChild {
-    position: absolute; 
+.legend_numOfChild { 
     visibility: hidden;
     padding: 5px;
     margin-left: 10px;
+position: absolute;
 }
 
 .legend_numOfMobile {
-    position: absolute; 
     visibility: hidden;
     padding: 5px;
     margin-left: 10px;
+position: absolute;
 }
 
 .legend_socialClass {
-    position: absolute;
     visibility: hidden;
     padding: 5px;
     margin-left: 10px;
+position: absolute;
 }
 
 .legend_priorityClass {
-    position: absolute;
     visibility: hidden;
     padding: 5px;
     margin-left: 10px;
+    position: absolute;
 }
 
 .legend_header {
 	padding: 5px;
 }
+
 #legend_fields
 {
-	float: left;
-	padding: 5px;
-	margin-top: 120px;
-	margin-left: 10px;
+	padding-left: 10px;
+	margin-left: 600px;
+	margin-top: 75px;
 }
+
+
 
 #legend_title
 {
 	padding: 10px;
-}
-
-#selectionList
-{
-	position: relative;
-	margin-top: 415px;
-	margin-left: 10px;
 }
 
 .colour_text {

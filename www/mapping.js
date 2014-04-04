@@ -10,6 +10,7 @@ keys = ["numOfMobile","numOfChild","socialClass","priorityClass"];
 
 //SC-1, ST-2, OBC-3, GN-4, others-5
 code_socialClass = {1:"SC",2:"ST",3:"OBC",4:"GN",5:"Others"};
+selected_village="";
 
 // Not Applicale-0, Disabled/handicapped-1, Single women/widow-2, Women headed household-3, others(old/destitute etc)-4
 code_priorityClass = {0:"Not Applicable",1:"Disabled/handicapped",2:"Single women/widow",3:"Women headed household",4:"others(old/destitute etc)"};
@@ -34,6 +35,17 @@ function get_colour_code(key,items)
 	}
 	return colour_code_map;
 }
+
+function get_title(i)
+{
+	var houseID = parseInt(i)+1;
+	sC = get_decoded_prop("socialClass",social_class_arr[i]);
+	pC = get_decoded_prop("priorityClass",priority_class_arr[i]);
+	numMob = get_decoded_prop("numOfMobile",num_of_mobile_arr[i]);
+	return "House #"+houseID+"\nSocial Class : "+sC+"\nPriority Class : "+pC+"\nNumber of Mobile : "+numMob;
+
+}
+
 function generate_points(key, i,colour_code)
 {
 	//This method generates individual point with correct colour code based on the key passed	
@@ -42,10 +54,12 @@ function generate_points(key, i,colour_code)
             x = coords[0][i],
             y = coords[1][i];	
         point.css({
-            "left": x-3 + "px",
-            "top": y-3 + "px",
+            "left": x-4 + "px",
+            "top": y-4 + "px",
 	    "background-color": code,	
         });
+	var houseID = parseInt(i)+1;
+	point.attr('title',get_title(i));
 	return point;
 }
 
@@ -123,17 +137,6 @@ function map_points(key,items)
 	}
 }
 
-
-$(function(){
-$(document).ready(function()
-{
-    map_points("numOfMobile",num_of_mobile_arr);
-    map_points("socialClass",social_class_arr);
-    map_points("numOfChild",num_of_child_arr);
-    map_points("priorityClass",priority_class_arr);
-     
-});
-
 function showKey(key,display)
 {
 	var displayValue = "hidden";
@@ -161,10 +164,39 @@ function show_selected_key(key)
 	}
 }
 
-$("#selectionField").change(function() {
-    var filter = this.value; 
-    show_selected_key(filter);
- });
-});
+$(function(){
+  $(document).ready(function()
+  {
+     map_points("numOfMobile",num_of_mobile_arr);
+     map_points("socialClass",social_class_arr);
+     map_points("numOfChild",num_of_child_arr);
+     map_points("priorityClass",priority_class_arr);
+     
+  });
 
+  //Method to listen to change of Criteria selection list
+  $("#selectionField").change(function() {
+     var filter = this.value; 
+     show_selected_key(filter);
+  });
+
+  //Method to listen to change of Village selection list
+  $("#selectionVillage").change(function() {
+     var filter = this.value;
+     if(filter=="select")
+     {
+	$("#selectionField").prop("disabled", true);
+	selected_village="";
+     }
+     else
+     {
+     	selected_village=filter;
+     	$("#selectionField").prop("disabled", false);
+     }
+  });
+
+  //Initiate the jquery tooltip
+  $( "[title]" ).tooltip();
+
+});
 
