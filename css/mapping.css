@@ -132,3 +132,8 @@ position: absolute;
     height: 12px;
     float: left;
 }
+
+#sizeSelection {
+    padding-left: 20px;
+    float: left;
+}

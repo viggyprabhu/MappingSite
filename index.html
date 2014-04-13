@@ -3,8 +3,9 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title> Kataria Village Data</title>
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="www/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="www/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="css/mapping.css">
 		<script type="text/javascript" src="www/mapping.js"></script>
 	</head>
@@ -13,28 +14,27 @@
 			<h3>This site is to show data collected from various villages on the map of the respective village.</h3>
 			<div id=selectionArea>
 				<div id="selectVillage">		
-					Select Village :
+					
 					<select name="selectionVillage" id="selectionVillage"> 
-						<option selected="selected" value="select">...</option>
+						<option selected="selected" value="select">Select Village :</option>
 						<option value="kataria">Kataria </option>
 					</select>
 				</div><!-- End of Selection Village List-->
 				<div id="selectCriteria">
-					Select the data-point :
+					
 					<select name="selectionField" id="selectionField" disabled> 
-						<option selected="selected" value="select">Choose an option...</option>
+						<option selected="selected" value="select">Select the data-point :</option>
 						<option value="numOfMobile">Number of Mobile </option>
 					  	<option value="socialClass">Social Class</option>
 					  	<option value="numOfChild">Number of Children</option>
 						<option value="priorityClass">Priority Class</option>
 					</select>
 				</div><!-- End of Selection Criteria List-->
-				<!--<div id="sizeSelection">
-					   Image size:
-					- <input type="radio" name="size" id="normalButton" value="normal" checked>	
-					+ <input type="radio" name="size" id="bigButton" value="big">
+				<div id="sizeSelection">
+					   <input type="radio" name="sizeButton" id="small" checked="checked"><label for="small">-</label>	
+					   <input type="radio" name="sizeButton" id="big"><label for="big">+</label>
 					
-				</div>-->
+				</div>
 			</div>
 			<br>
 			<div id="map_area">
