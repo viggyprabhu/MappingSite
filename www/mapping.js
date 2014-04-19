@@ -14,7 +14,6 @@
 
     //SC-1, ST-2, OBC-3, GN-4, others-5
         code_socialClass = {1 : "SC", 2 : "ST", 3 : "OBC", 4 : "GN", 5 : "Others"},
-        selected_village = "",
 
     // Not Applicale-0, Disabled/handicapped-1, Single women/widow-2, Women headed household-3, others(old/destitute etc)-4
         code_priorityClass = {0 : "Not Applicable", 1 : "Disabled/handicapped", 2 : "Single women/widow", 3 : "Women headed household", 4 : "others(old/destitute etc)"},
@@ -25,7 +24,12 @@
 
         colornames = ['#00ffff', '#0000ff', '#ff00ff', '#008000',
               '#00ff00', '#800000', '#000080', '#808000', '#800080', '#ff0000',
-              '#c0c0c0', '#008080', '#ffff00'];
+              '#c0c0c0', '#008080', '#ffff00'],
+        
+        selected_village = "",
+        selectedFilter = "",
+        //ImageSize can be 0 or 1, 0-small, 1-big   
+        imageSize = 0;
 
     function get_colour_code(key, items) {
         // This method is to get uniform colour code amongst all possible values for the data
@@ -62,21 +66,29 @@
 
     }
 
+    function scaleAsSizeFactor(toScale) {
+        var sizeFactor = 1;
+        if(imageSize == 1) {
+            sizeFactor = 1.5;
+        }
+        return toScale*sizeFactor;
+    }
     function generate_points(key, i, colour_code) {
-        //This method generates individual point with correct colour code based on the key passed	
+        //This method generates individual point with correct colour code based on the key passed
         var code = colour_code,
             point = $('<div class="'+key+'"></div>'),
             x = coords[0][i],
             y = coords[1][i],
-            houseID;	
-            point.css({
-                "left": x-4 + "px",
-                "top": y-4 + "px",
-            "background-color": code,	
-            }),
-            houseID = parseInt(i)+1;
-            point.attr('title',get_title(i));
-            return point;
+            houseID;
+        
+        point.css({
+            "left": scaleAsSizeFactor(x-4) + "px",
+            "top": scaleAsSizeFactor(y-4) + "px",
+        "background-color": code,	
+        }),
+        houseID = parseInt(i)+1;
+        point.attr('title',get_title(i));
+        return point;
     }
 
     function get_legend_header(key)
@@ -116,7 +128,9 @@
         legend_items_div.appendTo($('#legend_items'));
         legend_header_div = $('<div class="legend_header"><h4>'+legend_header+'</h4></div>');
         legend_header_div.appendTo($('#legend_'+key));
-
+        $("#legend_fields").css(
+            { 'margin-left':scaleAsSizeFactor(600)}
+            );
 
         for(var prop in colour_items)
         {
@@ -187,9 +201,9 @@
         add_current_divs(newDivs);
     }
 
-    function show_selected_key(key)
+    function show_selected_key()
     {
-
+        var key=selectedFilter;
         for(var i in keys)
         {
             if(keys[i]==key)
@@ -206,37 +220,47 @@
 
     $(function(){
 
-      //Method to listen to change of Criteria selection list
-      $("#selectionField").change(function() {
-         var filter = this.value; 
-         show_selected_key(filter);
-      });
+        //Method to listen to change of Criteria selection list
+        $("#selectionField").change(function() {
+            selectedFilter = this.value; 
+            show_selected_key();
+        });
 
-      //Method to listen to change of Village selection list
-      $("#selectionVillage").change(function() {
-         var filter = this.value;
-         if(filter=="select")
-         {
-        $("#selectionField").prop("disabled", true);
-        selected_village="";
-         }
-         else
-         {
-            selected_village=filter;
-            $("#selectionField").prop("disabled", false);
-         }
-      });
+        //Method to listen to change of Village selection list
+        $("#selectionVillage").change(function() {
+            var village = this.value;
+            if(village=="select") {
+                $("#selectionField").prop("disabled", true);
+                selected_village="";
+            } else {
+                selected_village=village;
+                $("#selectionField").prop("disabled", false);
+            }
+        });
 
-      //Initiate the jquery tooltip
-      $( "[title]" ).tooltip();
+        //Initiate the jquery tooltip
+        $( "[title]" ).tooltip();
 
         //Initiate Jquery button for SizeSeletion buttons
-      $('#sizeSelection').buttonset();
+        $('#sizeSelection').buttonset();
 
-       $('#').click(function() {
+        /* $('#').click(function() {
             var selValue = $('input[name=rbnNumber]:checked').val(); 
             $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
+        });*/
+
+        $("#small").click(function() {
+            imageSize=0;
+            $("#villageImage").removeAttr("src").attr("src", "images/kataria-small.jpg").attr("width",scaleAsSizeFactor(600)).attr("height",scaleAsSizeFactor(397));
+            show_selected_key();
+            
+        });
+
+        $("#big").click(function() {
+            imageSize=1;
+            $("#villageImage").removeAttr("src").attr("src", "images/kataria-big.jpg").attr("width", scaleAsSizeFactor(600)).attr("height",scaleAsSizeFactor(397));
+            show_selected_key();
+            
         });
     });
-
 })(jQuery);
