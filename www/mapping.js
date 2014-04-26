@@ -29,7 +29,9 @@
         selected_village = "",
         selectedFilter = "",
         //ImageSize can be 0 or 1, 0-small, 1-big   
-        imageSize = 0;
+        imageSize = 0,
+        IMAGE_DIR_PATH = "images/",
+        IMAGE_EXTENSION = ".jpg";
 
     function get_colour_code(key, items) {
         // This method is to get uniform colour code amongst all possible values for the data
@@ -217,6 +219,63 @@
             }
         }
     }
+    
+    function getImageSizeAppender()
+    {
+        var sizeName = "small";
+        if(imageSize==1)
+        {
+            sizeName = "big";
+        }
+        return sizeName;
+    }
+    
+    function getVillageImageSrc()
+    {
+        
+        return IMAGE_DIR_PATH+"/"+selected_village+"-"+getImageSizeAppender()+IMAGE_EXTENSION;
+        
+    }
+    
+    function load_village_image()
+    {
+        $('#map_wrapper img').remove();
+        $('#map_wrapper').prepend('<img id="villageImage" src="'+getVillageImageSrc()+'" />');
+    }
+    
+    function show_village_image()
+    {
+        load_village_image();
+        var key=selectedFilter;
+        for(var i in keys)
+        {
+            if(keys[i]==key)
+            {
+                show_points(key,arrs[i]);		
+                showKey(key,1);
+            }
+            else
+            {
+                showKey(keys[i],0);
+            }
+        }
+    }
+    
+    function editImageAttr(size)
+    {
+        imageSize = size;
+        $("#villageImage").removeAttr("src").attr("src", getVillageImageSrc()).attr("width", scaleAsSizeFactor(600)).attr("height",scaleAsSizeFactor(397));
+        show_selected_key();   
+    }
+    
+    function remove_village_image()
+    {
+        $('#map_wrapper img').remove();
+        remove_current_divs();
+        $("#selectionField").prop("disabled", true);
+        selected_village="";    
+        $("#sizeSelection").css({'visibility':'hidden'});
+    }
 
     $(function(){
 
@@ -229,13 +288,15 @@
         //Method to listen to change of Village selection list
         $("#selectionVillage").change(function() {
             var village = this.value;
-            if(village=="select") {
-                $("#selectionField").prop("disabled", true);
-                selected_village="";
+            if(village=="select") {       
+                remove_village_image();
             } else {
                 selected_village=village;
                 $("#selectionField").prop("disabled", false);
+                $("#sizeSelection").css({'visibility':'visible'})
+                show_village_image();
             }
+            
         });
 
         //Initiate the jquery tooltip
@@ -244,23 +305,14 @@
         //Initiate Jquery button for SizeSeletion buttons
         $('#sizeSelection').buttonset();
 
-        /* $('#').click(function() {
-            var selValue = $('input[name=rbnNumber]:checked').val(); 
-            $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
-        });*/
-
         $("#small").click(function() {
-            imageSize=0;
-            $("#villageImage").removeAttr("src").attr("src", "images/kataria-small.jpg").attr("width",scaleAsSizeFactor(600)).attr("height",scaleAsSizeFactor(397));
-            show_selected_key();
-            
+            editImageAttr(0);
         });
 
         $("#big").click(function() {
-            imageSize=1;
-            $("#villageImage").removeAttr("src").attr("src", "images/kataria-big.jpg").attr("width", scaleAsSizeFactor(600)).attr("height",scaleAsSizeFactor(397));
-            show_selected_key();
-            
+            editImageAttr(1);
         });
+        
+        
     });
 })(jQuery);
